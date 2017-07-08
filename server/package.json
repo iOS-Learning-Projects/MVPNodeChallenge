@@ -1,0 +1,19 @@
+{
+  "name": "node-password",
+  "version": "1.0.0",
+  "description": "Password Manager",
+  "main": "server.js",
+  "author": "Eduardo Vital Alencar Cunha <vitaldu@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "autostart": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.29",
+    "mongoose": "^4.11.1"
+  }
+}
