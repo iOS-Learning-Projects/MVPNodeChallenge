@@ -10,8 +10,8 @@ import UIKit
 import Alamofire
 
 class MainViewController: UIViewController {
-    var tasks = [Task]()
-    var filteredTasks = [Task]()
+    var taskPresenter = TaskPresenter()
+    
     var shouldShowSearchResults = false
     var searchController: UISearchController!
 
@@ -19,22 +19,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var tasksTableView: UITableView!
 
     // MARK: - IBActions
-
-
-    // MARK: - Functions
-    func filterTasksBy(name: String) {
-        let lowerCaseSearch = name.lowercased()
-
-        if name.isEmpty {
-            self.filteredTasks = self.tasks
-        } else {
-            self.filteredTasks = self.tasks.filter() { t in
-                return (t.name.lowercased().range(of: lowerCaseSearch) != nil)
-            }
-        }
-
-    }
-
     func configureSearchController() {
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchResultsUpdater = self
@@ -78,9 +62,9 @@ extension MainViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if shouldShowSearchResults {
-            return self.filteredTasks.count
+            return self.taskPresenter.filteredTasks.count
         } else {
-            return self.tasks.count
+            return self.taskPresenter.tasks.count
         }
     }
 
@@ -88,10 +72,9 @@ extension MainViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "previewTaskCell") as! PreviewTaskCell
 
         if shouldShowSearchResults {
-
-            cell.nameLabel.text = self.filteredTasks[indexPath.row].name
+            cell.nameLabel.text = self.taskPresenter.filteredTasks[indexPath.row].name
         } else {
-            cell.nameLabel.text = self.tasks[indexPath.row].name
+            cell.nameLabel.text = self.taskPresenter.tasks[indexPath.row].name
         }
 
         return cell
@@ -100,7 +83,7 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             Server.delegate = self
-            Server.delete(id: self.tasks[indexPath.row].id)
+            Server.delete(id: self.taskPresenter.tasks[indexPath.row].id)
         }
     }
 
@@ -111,7 +94,7 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let taskViewController = self.storyboard?.instantiateViewController(withIdentifier: "taskViewController") as! TaskViewController
 
-        taskViewController.task = self.tasks[indexPath.row]
+        taskViewController.task = self.taskPresenter.tasks[indexPath.row]
         taskViewController.delegate = self
 
         self.navigationController?.pushViewController(taskViewController, animated: true)
@@ -140,7 +123,7 @@ extension MainViewController: TaskViewControllerDelegate {
 // MARK: - UISearchResultsUpdating
 extension MainViewController: UISearchResultsUpdating  {
     func updateSearchResults(for searchController: UISearchController) {
-        self.filterTasksBy(name: searchController.searchBar.text!)
+        self.taskPresenter.filterTasksBy(name: searchController.searchBar.text!)
         self.tasksTableView.reloadData()
     }
 }
@@ -164,20 +147,20 @@ extension MainViewController: UISearchBarDelegate {
 
 extension MainViewController: ServerDelegate {
     func dealWith(tasks: [Task], on method: HTTPMethod) {
-        self.tasks = tasks
+        self.taskPresenter.tasks = tasks
         self.tasksTableView.reloadData()
     }
 
     func dealWith(task: Task, on method: HTTPMethod) {
         switch method {
         case .delete:
-            self.tasks = self.tasks.filter() { (t) in
+            self.taskPresenter.tasks = self.taskPresenter.tasks.filter() { (t) in
                 return t.id != task.id
             }
         case .post:
-            self.tasks.append(task)
+            self.taskPresenter.tasks.append(task)
         case .patch:
-            self.tasks = self.tasks.map() { (t) in
+            self.taskPresenter.tasks = self.taskPresenter.tasks.map() { (t) in
                 if t.id == task.id {
                     return task
                 }

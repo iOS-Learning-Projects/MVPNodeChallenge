@@ -21,6 +21,7 @@
 		E8AD3EEC1F11783300C813BB /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AD3EEA1F11783300C813BB /* SwiftyJSON.framework */; };
 		E8AD3EEE1F117AAA00C813BB /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD3EED1F117AAA00C813BB /* Formatter.swift */; };
 		E8AD3EF11F117C4B00C813BB /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD3EF01F117C4B00C813BB /* Server.swift */; };
+		E8DE73711F130BCF00BC9A93 /* TaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE73701F130BCF00BC9A93 /* TaskPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +56,7 @@
 		E8AD3EEA1F11783300C813BB /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		E8AD3EED1F117AAA00C813BB /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		E8AD3EF01F117C4B00C813BB /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		E8DE73701F130BCF00BC9A93 /* TaskPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 		E879C8721EF9935A00E9757B /* DataBaseChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				E8DE736F1F130BBB00BC9A93 /* Presenter */,
 				E8AD3EEF1F117C3E00C813BB /* Server */,
 				E80B07951EFAEB030029F19B /* Custom */,
 				E879C8861EF9B1BE00E9757B /* Model */,
@@ -172,6 +175,14 @@
 				E8AD3EF01F117C4B00C813BB /* Server.swift */,
 			);
 			name = Server;
+			sourceTree = "<group>";
+		};
+		E8DE736F1F130BBB00BC9A93 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				E8DE73701F130BCF00BC9A93 /* TaskPresenter.swift */,
+			);
+			name = Presenter;
 			sourceTree = "<group>";
 		};
 		E9DB3E190A77BCB30B004F5E /* Pods */ = {
@@ -310,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E80B07971EFAEC500029F19B /* PreviewTaskCell.swift in Sources */,
+				E8DE73711F130BCF00BC9A93 /* TaskPresenter.swift in Sources */,
 				E879C8761EF9935A00E9757B /* MainViewController.swift in Sources */,
 				E879C8901EF9C4C500E9757B /* TaskViewController.swift in Sources */,
 				E8AD3EEE1F117AAA00C813BB /* Formatter.swift in Sources */,
